@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- Link the specific form CSS for the login page -->
+    <link rel="stylesheet" href="{% static 'users/forms.css' %}">
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Login to Your Account</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    {{ form.username.errors }}
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="id_password">Password</label>
+                    {{ form.password.errors }}
+                    {{ form.password }}
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="remember_me" id="remember_me">
+                    <label for="remember_me">Remember me</label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

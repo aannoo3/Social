@@ -1,0 +1,213 @@
+/* Reset some basic elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fixes the navbar to the top */
+    top: 0; /* Position it at the top */
+    width: 100%; /* Make sure it spans the full width */
+    z-index: 1000; /* Make sure it appears above other elements */
+}
+
+.navbar .logo h2 {
+    font-size: 24px;
+    margin-left: 20px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ff00ff;
+}
+
+.nav-btn .post-btn {
+    background-color: #ff00ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.nav-btn .post-btn:hover {
+    background-color: #ff33ff;
+}
+
+/* Hamburger Menu Styling */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.hamburger .line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+/* Main content */
+.main-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.post-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.post {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-details h4 {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.user-details p {
+    font-size: 12px;
+    color: #777;
+}
+
+.post-content {
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+.post-interactions {
+    display: flex;
+    justify-content: space-around;
+    font-size: 14px;
+    color: #777;
+}
+
+.post-interactions span {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.post-interactions span:hover {
+    color: #ff00ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #333;
+        flex-direction: column;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    .nav-links.active {
+        max-height: 300px;
+    }
+
+    .nav-links li {
+        text-align: center;
+        padding: 15px;
+        margin: 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .post-interactions span {
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

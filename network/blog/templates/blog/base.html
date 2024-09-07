@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Network</title>
+    <link rel="stylesheet" href="{% static 'blog/styles.css' %}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h2>SocialNet</h2>
+        </div>
+        <!-- Hamburger icon for mobile -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <!-- Nav Links -->
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Messages</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="#">Settings</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %} 
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+        <div class="nav-btn">
+            
+            
+            <button class="post-btn">Create Post</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+     {% block content %}
+     {% for post in posts %}
+    <div class="main-content">
+        <div class="post-container">
+            <div class="post">
+                <div class="user-info">
+                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                    <div class="user-details">
+                        <h4>{{post.author.username}}</h4>
+                        <p>{{ post.date_posted }}</p>
+                    </div>
+                </div>
+                <p class="post-content">{{ post.content }}</p>
+                <div class="post-interactions">
+                    <span>👍 Like</span>
+                    <span>💬 Comment</span>
+                    <span>🔄 Share</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
