@@ -1,0 +1,39 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container profile-container">
+    <div class="profile-header">
+        <div class="profile-pic">
+            <img src="{{ user.profile.image.url }}" alt="Profile Picture">
+        </div>
+        <div class="profile-details">
+            <h2>{{ user.username }}'s Profile</h2>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+            <p><strong>Last Active:</strong> {{ user.last_login|date:"F d, Y, H:i" }}</p>
+            <p><strong>Total Posts:</strong> {{ user.posts.count }}</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="user-posts">
+        <h3>Recent Posts</h3>
+        {% if user.posts.count > 0 %}
+            <ul class="posts-list">
+                {% for post in user.posts.all %}
+                    <li class="post-item">
+                        <div class="post-content">
+                            <p>{{ post.content|truncatewords:10 }}</p>
+                            <small>Posted on {{ post.created_at|date:"F d, Y" }}</small>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-posts">No posts yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

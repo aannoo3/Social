@@ -1,0 +1,97 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 80px;  /* This will create space below the navbar */
+}
+
+.navbar {
+    position: fixed;  /* Keeps navbar fixed at the top */
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.profile-container {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    padding-top: 80px !important;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    margin-right: 20px;
+}
+
+.profile-pic img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.profile-details p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+hr {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+.user-posts h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.posts-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.post-item .post-content {
+    font-size: 16px;
+    color: #333;
+}
+
+.post-item small {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+.no-posts {
+    font-size: 16px;
+    color: #999;
+    text-align: center;
+    margin-top: 20px;
+}
