@@ -39,34 +39,49 @@
         <div class="nav-btn">
             
             
-            <button class="post-btn">Create Post</button>
+            <a href="{% url 'post-create' %}">
+                <button class="post-btn">Create Post</button>
+            </a>
+            
         </div>
     </nav>
 
     <!-- Main Content -->
-     {% block content %}
-     {% for post in posts %}
-    <div class="main-content">
-        <div class="post-container">
-            <div class="post">
-                <div class="user-info">
-                    <img src="{{ post.author.profile.image.url }}" alt="Profile Picture" class="profile-pic">
-                    <div class="user-details">
-                        <h4>{{post.author.username}}</h4>
-                        <p>{{ post.date_posted }}</p>
-                    </div>
+
+    {% block content %}
+        <div class="container">
+            <h2>All Posts</h2>
+            {% for post in posts %}
+                <div class="post-item">
+                    <h3>{{ post.author.username }}</h3>
+                    <p>{{ post.content|truncatewords:20 }}</p>
+                    <small>Posted on {{ post.created_at|date:"F d, Y" }}</small>
+                    <a href="{% url 'post-detail' post.id %}">Read More</a>
                 </div>
-                <p class="post-content">{{ post.content }}</p>
-                <div class="post-interactions">
-                    <span>👍 Like</span>
-                    <span>💬 Comment</span>
-                    <span>🔄 Share</span>
-                </div>
+            {% endfor %}
+            <!-- Pagination -->
+            <div class="pagination">
+                {% if is_paginated %}
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+    
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+    
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                {% endif %}
             </div>
         </div>
-    </div>
-    {% endfor %}
     {% endblock %}
+    
     <script>
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
