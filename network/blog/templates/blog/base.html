@@ -50,7 +50,7 @@
         <div class="post-container">
             <div class="post">
                 <div class="user-info">
-                    <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
+                    <img src="{{ post.author.profile.image.url }}" alt="Profile Picture" class="profile-pic">
                     <div class="user-details">
                         <h4>{{post.author.username}}</h4>
                         <p>{{ post.date_posted }}</p>
