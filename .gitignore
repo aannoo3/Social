@@ -1,0 +1,5 @@
+echo "__pycache__/" >> .gitignore
+git rm -r --cached users/__pycache__
+# Ignore Python bytecode files
+*.pyc
+__pycache__/
