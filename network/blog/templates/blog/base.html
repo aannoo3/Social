@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -25,29 +24,37 @@
         <!-- Nav Links -->
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Messages</a></li>
-            <li><a href="#">Notifications</a></li>
-            <li><a href="#">Settings</a></li>
-            <li>
-                <form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %} 
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
+
+            {% if user.is_authenticated %}
+                <!-- Show these links if the user is authenticated (logged in) -->
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Notifications</a></li>
+                <li><a href="#">Settings</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %} 
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <!-- Show these links if the user is not authenticated (not logged in) -->
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Sign Up</a></li>
+            {% endif %}
         </ul>
+
+        <!-- Show 'Create Post' button if the user is authenticated -->
+        {% if user.is_authenticated %}
         <div class="nav-btn">
-            
-            
             <a href="{% url 'post-create' %}">
                 <button class="post-btn">Create Post</button>
             </a>
-            
         </div>
+        {% endif %}
     </nav>
 
     <!-- Main Content -->
-
     {% block content %}
         <div class="container">
             <h2>All Posts</h2>
