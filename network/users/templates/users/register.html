@@ -1,32 +1,33 @@
 {% extends "blog/base.html" %}
-{% load static %}
+{% load form_tags %}
 
 {% block content %}
-    <!-- Link the specific form CSS for the register page -->
-    <link rel="stylesheet" href="{% static 'users/forms.css' %}">
-
-    <div class="container">
-        <div class="form-container">
-            <h2>Create Your Account</h2>
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="card shadow-lg p-4" style="width: 400px;">
+            <h2 class="text-center mb-4">Create Your Account</h2>
             <form method="POST">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_username">Username</label>
-                    {{ form.username }}
+                
+                <div class="form-group mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                    {{ form.username|add_class:"form-control" }}
                 </div>
-                <div class="form-group">
-                    <label for="id_email">Email</label>
-                    {{ form.email }}
+                <div class="form-group mb-3">
+                    <label for="id_email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="id_email" required>
                 </div>
-                <div class="form-group">
-                    <label for="id_password1">Password</label>
-                    {{ form.password1 }}
+                <div class="form-group mb-3">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                    {{ form.password1|add_class:"form-control" }}
                 </div>
-                <div class="form-group">
-                    <label for="id_password2">Confirm Password</label>
-                    {{ form.password2 }}
+                <div class="form-group mb-3">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                    {{ form.password2|add_class:"form-control" }}
                 </div>
-                <button type="submit" class="btn">Register</button>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </div>
             </form>
         </div>
     </div>
