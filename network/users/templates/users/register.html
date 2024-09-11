@@ -1,34 +1,44 @@
 {% extends "blog/base.html" %}
-{% load form_tags %}
+{% load widget_tweaks socialaccount %} <!-- Load widget_tweaks and socialaccount -->
 
 {% block content %}
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="card shadow-lg p-4" style="width: 400px;">
-            <h2 class="text-center mb-4">Create Your Account</h2>
-            <form method="POST">
-                {% csrf_token %}
-                
-                <div class="form-group mb-3">
-                    <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
-                    {{ form.username|add_class:"form-control" }}
-                </div>
-                <div class="form-group mb-3">
-                    <label for="id_email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="id_email" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
-                    {{ form.password1|add_class:"form-control" }}
-                </div>
-                <div class="form-group mb-3">
-                    <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-                    {{ form.password2|add_class:"form-control" }}
-                </div>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4" style="width: 400px;">
+        <h2 class="text-center mb-4">Create Your Account</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                {{ form.username|add_class:"form-control" }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="id_email" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                {{ form.password1|add_class:"form-control" }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                {{ form.password2|add_class:"form-control" }}
+            </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
-                </div>
-            </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </div>
+        </form>
+
+        <!-- Social Login Buttons -->
+        <div class="social-login-buttons mt-4">
+            <p class="text-center">Or sign up using</p>
+            <div class="d-flex justify-content-center">
+                {% providers_media_js %}
+                <a href="{% provider_login_url 'google' %}" class="btn btn-danger me-2">Login with Google</a>
+                <!-- <a href="" class="btn btn-primary">Login with Facebook</a> -->
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

@@ -22,8 +22,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls')),
-    path('account/', include('users.urls'))
+    path('', include('blog.urls')),  # Blog URLs
+    path('account/', include('users.urls')),  # Your custom user URLs
+    path('accounts/', include('allauth.urls')),  # Django allauth for social login
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 {% load static %}
-
+{% load socialaccount %}
 {% block content %}
     <!-- Link the specific form CSS for the login page -->
     <link rel="stylesheet" href="{% static 'users/forms.css' %}">
@@ -27,6 +27,14 @@
                 </div>
                 <button type="submit" class="btn">Login</button>
             </form>
+
+            <hr>
+
+            <div class="social-login">
+                <h3 class="text-center">Or login with</h3>
+                <a href="{% provider_login_url 'google' %}" class="btn btn-danger w-100 mt-2">Login with Google</a>
+                <!-- <a href="" class="btn btn-primary w-100 mt-2">Login with Facebook</a> -->
+            </div>
         </div>
     </div>
 {% endblock %}

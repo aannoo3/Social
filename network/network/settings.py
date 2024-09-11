@@ -39,7 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'users',
+
+    'widget_tweaks',
+
+    'django.contrib.sites',  # Required for allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
+SITE_ID = 1  # Django Sites framework is required for allauth
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'network.urls'
@@ -71,6 +83,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'network.wsgi.application'
 
+# Django authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth backend
+)
+# Allauth settings for email authentication and social login
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Email verification is mandatory
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Authentication with email only
+ACCOUNT_USERNAME_REQUIRED = False
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -153,7 +175,27 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 
+SOCIAL_AUTH_GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+
+# SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')
+# SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET')
+
+
 
 # Enable logging to get detailed output of email sending process
 import logging
 logging.basicConfig(level=logging.DEBUG)
+
+
+# Allauth configuration for social logins
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': os.getenv('GOOGLE_CLIENT_ID'),
+            'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
+            'key': ''
+        }
+    }
+}
+
