@@ -23,7 +23,7 @@
         </div>
         <!-- Nav Links -->
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="{% url 'post-list'%}">Home</a></li>
 
             {% if user.is_authenticated %}
                 <!-- Show these links if the user is authenticated (logged in) -->
