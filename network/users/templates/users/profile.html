@@ -13,6 +13,7 @@
             <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
             <p><strong>Last Active:</strong> {{ user.last_login|date:"F d, Y, H:i" }}</p>
             <p><strong>Total Posts:</strong> {{ user.posts.count }}</p>
+            <h2><a href="{% url 'profile-update' %}">Update profile</a></h2>
         </div>
     </div>
 
