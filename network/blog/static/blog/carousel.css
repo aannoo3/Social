@@ -1,0 +1,106 @@
+/* Carousel container */
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  /* Carousel track */
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 20px; /* Use gap instead of margins */
+  }
+  
+  /* Book container */
+  .book {
+    position: relative;
+    flex: 0 0 calc(20% - 20px); /* For 5 items per row */
+    border-radius: 10px;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 12px #000;
+    transform-style: preserve-3d;
+    perspective: 2000px;
+    overflow: hidden;
+    aspect-ratio: 11 / 15; /* Maintain aspect ratio */
+    /* Removed width and height to allow responsiveness */
+  }
+  
+  /* Cover (front side) */
+  .cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: transform 0.5s;
+    transform-origin: left;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  /* Image inside the cover */
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Info (back side) */
+  .info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg);
+    transition: transform 0.5s;
+    transform-origin: left;
+  }
+  
+  /* Hover effect to flip the cover */
+  .book:hover .cover {
+    transform: rotateY(-180deg);
+  }
+  
+  /* Flip the info to be visible when cover flips */
+  .book:hover .info {
+    transform: rotateY(0);
+  }
+  
+  /* Arrow buttons */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255,255,255,0.8);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 10px;
+    z-index: 1;
+  }
+  
+  .left-arrow {
+    left: 10px;
+  }
+  
+  .right-arrow {
+    right: 10px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .book {
+      flex: 0 0 calc(50% - 20px); /* For 2 items per row */
+    }
+  }
+  
