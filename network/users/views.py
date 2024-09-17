@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegisterForm, ProfileUpdateForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 from blog.models import Post
 from django.contrib import messages
-
-from django.shortcuts import render, redirect
+from . models import Profile, Relationship
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
@@ -12,22 +11,9 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from .tokens import account_activation_token
-
+from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.http import urlsafe_base64_decode
-from django.shortcuts import render, redirect
-from .tokens import account_activation_token
 
-
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.conf import settings
-from .tokens import account_activation_token
-from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -80,9 +66,29 @@ def activate(request, uidb64, token):
 
 
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html', {'user': request.user})
+def profile(request, username):
+    user_profile = get_object_or_404(User, username=username)
+    profile = Profile.objects.get(user=user_profile)
+    posts = Post.objects.filter(author=user_profile)
+    is_following = Relationship.objects.filter(follower=request.user, following=user_profile).exists()
+    context = {
+        'profile_user': user_profile,
+        'profile': profile,
+        'posts': posts,
+        'is_following': is_following,
+    }
+    return render(request, 'users/profile.html', context)
 
+@login_required
+def follow_unfollow(request, username):
+    target_user = get_object_or_404(User, username=username)
+    relationship, created = Relationship.objects.get_or_create(
+        follower=request.user,
+        following=target_user
+    )
+    if not created:
+        relationship.delete()
+    return HttpResponseRedirect(reverse('profile', args=[username]))
 
 @login_required
 def profile_update(request):

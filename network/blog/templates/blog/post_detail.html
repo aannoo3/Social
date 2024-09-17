@@ -4,7 +4,8 @@
     <div class="container">
         <div class="post-detail">
             <h2>{{ post.author.username }}</h2>
-            <p>{{ post.content }}</p>
+            <p>{{ post.content|linebreaks }}</p>
+
             <small>Posted on {{ post.created_at|date:"F d, Y" }}</small>
             <hr>
             <a href="{% url 'post-update' post.id %}" class="btn">Edit</a>

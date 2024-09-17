@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from . models import Post
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from . forms import CommentForm
+
 # Create your views here.
 
 # def home(request):
@@ -13,7 +17,7 @@ from django.urls import reverse
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['content']  # Only the content field, but you can add more
+    fields = ['content', 'image']  # Only the content and image field, but you can add more
     template_name = 'blog/post_form.html'  # Reuse the form template
 
     def form_valid(self, form):
@@ -63,3 +67,24 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+    
+@login_required
+def like_unlike_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.post = post
+        comment.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
