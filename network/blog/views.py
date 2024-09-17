@@ -34,6 +34,9 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 5  # Add pagination (optional)
 
+    def get_queryset(self):
+        return Post.objects.all().prefetch_related('likes', 'comments')
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -56,6 +59,45 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
     
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import ListView
+from .models import Post, Comment
+from .forms import CommentForm
+
+# ListView for displaying all posts
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/base.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()  # Provide the comment form
+        return context
+
+# Like a post
+def like_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('post-list')  # Redirect back to the home page
+
+# Add a comment to a post
+@login_required
+def add_comment(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+    return redirect('post-list')  # Redirect back to the home page
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post

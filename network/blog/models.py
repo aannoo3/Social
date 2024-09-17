@@ -10,9 +10,16 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
-    def __str__(self):
-        return self.title
+    def total_likes(self):
+        return self.likes.count()
 
+    def total_comments(self):
+        return self.comments.count()  # assuming a related_name="comments" in Comment model
+
+    def __str__(self):
+        return f'{self.author} Post'
+
+    
 
     def get_absolute_url(self):
         # Redirect to the post's detail view after update
