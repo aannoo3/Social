@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes
 from .tokens import account_activation_token
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
-
+from django.urls import reverse
 
 def register(request):
     if request.method == 'POST':
@@ -68,7 +68,7 @@ def activate(request, uidb64, token):
 @login_required
 def profile(request, username):
     user_profile = get_object_or_404(User, username=username)
-    profile = Profile.objects.get(user=user_profile)
+    profile = get_object_or_404(Profile, user=user_profile)
     posts = Post.objects.filter(author=user_profile)
     is_following = Relationship.objects.filter(follower=request.user, following=user_profile).exists()
     context = {
@@ -100,7 +100,7 @@ def profile_update(request):
             u_form.save()
             p_form.save()
             messages.success(request, 'Your profile has been updated!')
-            return redirect('profile')  # Redirect to prevent re-submission
+            return redirect('profile', username=request.user.username)  # Redirect to prevent re-submission
 
     else:
         u_form = UserUpdateForm(instance=request.user)

@@ -27,7 +27,7 @@
 
             {% if user.is_authenticated %}
                 <!-- Show these links if the user is authenticated (logged in) -->
-                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'profile' user.username %}">Profile</a></li>
                 <li><a href="#">Messages</a></li>
                 <li><a href="#">Notifications</a></li>
                 <li><a href="#">Settings</a></li>
