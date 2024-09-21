@@ -70,7 +70,7 @@ def profile(request, username):
     user_profile = get_object_or_404(User, username=username)
     profile = get_object_or_404(Profile, user=user_profile)
     posts = Post.objects.filter(author=user_profile)
-    is_following = Relationship.objects.filter(follower=request.user, following=user_profile).exists()
+    is_following = Relationship.objects.filter(follower=request.user, following=user_profile).exists() if request.user.is_authenticated else False
     context = {
         'profile_user': user_profile,
         'profile': profile,

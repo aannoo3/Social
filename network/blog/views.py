@@ -29,14 +29,15 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/base.html'
+    template_name = 'blog/home.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5  # Add pagination (optional)
 
     def get_queryset(self):
         return Post.objects.all().prefetch_related('likes', 'comments')
-
+    
+  
 
 class PostDetailView(DetailView):
     model = Post
